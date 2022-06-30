@@ -19573,6 +19573,34 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/router.js":
+/*!********************************!*\
+  !*** ./resources/js/router.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
+/* harmony import */ var _Components_firstPage_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Components/firstPage.vue */ "./resources/js/Components/firstPage.vue");
+
+
+var Router = (0,vue_router__WEBPACK_IMPORTED_MODULE_1__.createRouter)({
+  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_1__.createWebHistory)(),
+  routes: [{
+    name: 'first',
+    path: '/first-route-page',
+    component: _Components_firstPage_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }]
+}); // Vue.use(Router);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Router);
+
+/***/ }),
+
 /***/ "./node_modules/lodash/lodash.js":
 /*!***************************************!*\
   !*** ./node_modules/lodash/lodash.js ***!
@@ -40917,29 +40945,18 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _Components_mainApp_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Components/mainApp.vue */ "./resources/js/Components/mainApp.vue");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
-/* harmony import */ var _Components_firstPage_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Components/firstPage.vue */ "./resources/js/Components/firstPage.vue");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
 
-
-var Router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createRouter)({
-  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createWebHistory)(),
-  routes: [{
-    path: '/first-route-page',
-    component: _Components_firstPage_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    name: 'first'
-  }]
-});
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
   components: {
-    mainApp: _Components_mainApp_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    fristPage: _Components_firstPage_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    mainApp: _Components_mainApp_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
-app.use(Router);
+app.use(_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 app.mount('#app');
 })();
 

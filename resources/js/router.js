@@ -1,22 +1,19 @@
-// import Vue from 'vue';
-import { createApp } from 'vue'
-import vueRouter from 'vue-route';
-Vue.use(vueRouter);
+import { createRouter, createWebHistory } from 'vue-router';
 
-import fristPage from 'Component/firstPage.vue';
+import fristPage from './Components/firstPage.vue';
 
 
-const Router = new VueRouter({
-    mode: 'history',
+const Router = createRouter({
+    history: createWebHistory(),
     routes: [
         {
-            path: 'first-route-page',
-            component: {fristPage},
+            name: 'first',
+            path: '/first-route-page',
+            component: fristPage,
         }
     ]
 });
 
+// Vue.use(Router);
 
-export default new Router({
-    mode: 'history',
-});
+export default Router;
