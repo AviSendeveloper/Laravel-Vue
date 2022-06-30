@@ -12,3 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js').vue();
+
+mix.styles([
+    // put css file to compile and use it in vue component
+    'public/project_css/main.css',
+    'public/project_css/grid.min.css',
+], 'public/css/app.css');
