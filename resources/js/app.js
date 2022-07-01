@@ -5,7 +5,7 @@ import mainApp from './Components/mainApp.vue';
 import Router from './router';
 
 const app = createApp({
-    components: { 
+    components: {
         mainApp,
     }
 });

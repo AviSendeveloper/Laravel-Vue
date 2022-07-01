@@ -7,13 +7,6 @@ import hooks from './Components/basic/hooks.vue';
 const Router = createRouter({
     history: createWebHistory(),
     routes: [
-        // Project
-        // {
-        //     name: 'home',
-        //     path: '/',
-        //     component: homePage,
-        // },
-
         // Test
         {
             name: 'first',
