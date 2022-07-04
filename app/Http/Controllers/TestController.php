@@ -11,4 +11,8 @@ class TestController extends Controller
             'name' => 'Developer',
         ]);
     }
+
+    public function fetchTags(Request $request) {
+        return $request;
+    }
 }

@@ -32,4 +32,11 @@ mix.styles([
     'public/css/assets/css/demo.css',
     'public/css/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css',
     'public/css/assets/vendor/libs/apex-charts/apex-charts.css',
+    'public/img/avatars',
+    'public/img/backgrounds',
+    'public/img/elements',
+    'public/img/favicon',
+    'public/img/icons',
+    'public/img/illustrations',
+    'public/img/layouts',
 ], 'public/css/app.css');

@@ -36,4 +36,9 @@
 
 <script src="{{ mix('js/app.js') }}"></script>
 
+{{-- ivuew --}}
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/view-ui-plus/dist/styles/viewuiplus.css">
+{{-- <script type="text/javascript" src="https://unpkg.com/vue@next"></script> --}}
+{{-- <script type="text/javascript" src="https://unpkg.com/view-ui-plus"></script> --}}
+
 </html>

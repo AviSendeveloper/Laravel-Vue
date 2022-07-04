@@ -23,3 +23,5 @@ Route::get('/test', [TestController::class, 'test']);
 Route::any('{slug}', function() {
     return view('welcome');
 });
+
+Route::post('/app/fetch-tags', [TestController::class, 'fetchTags']);
