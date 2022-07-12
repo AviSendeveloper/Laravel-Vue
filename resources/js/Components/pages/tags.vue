@@ -6,8 +6,8 @@
       <div class="container-xxl flex-grow-1 container-p-y">
         <!-- Bootstrap Table with Header - Light -->
         <div class="card">
-          <h5 >Light Table head</h5>
-          <Button class="float-right">Default</Button>
+          <h5>Tags list</h5>
+          <Button class="float-right" @click="toggleAddModel">Default</Button>
           <div class="table-responsive text-nowrap">
             <table class="table">
               <thead class="table-light">
@@ -41,14 +41,19 @@
 
         <!-- Add model -->
         <Modal
-          v-model="showAddModel"
-          title="Modal Title"
-          ok-text="OK"
-          cancel-text="Cancel"
+            v-model="showAddModel"
+            title="Add Tags"
+            @on-ok="ok"
+            @on-cancel="cancel"
         >
-          <p>Something...</p>
-          <p>Something...</p>
-          <p>Something...</p>
+            <p>Something...</p>
+            <p>Something...</p>
+            <p>Something...</p>
+
+            <div slot="footer">
+                <button type="deafult" @clcik="!closeAddModel">Close</button>
+                <button type="primary" @clcik="submitAddTag">Add tag</button>
+            </div>
         </Modal>
       </div>
       <!-- / Content -->
@@ -62,9 +67,25 @@
 export default {
   data() {
     return {
-      showAddModel: true,
+      showAddModel: false,
+      closeAddModel: true,
     }
   },
+
+  methods: {
+    toggleAddModel () {
+        this.$Modal.confirm({
+            title: 'Title',
+            content: '<p>Content of dialog</p><p>Content of dialog</p>',
+            onOk: () => {
+                this.$Message.info('Clicked ok');
+            },
+            onCancel: () => {
+                this.$Message.info('Clicked cancel');
+            }
+        });
+    },
+  }
 
   // async created() {
   //   const res = await this.callApi('post', '/app/fetch-tags', {tag_name: 'test tag'});
