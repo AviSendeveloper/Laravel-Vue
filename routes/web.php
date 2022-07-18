@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,8 @@ Route::any('{slug}', function() {
 });
 
 Route::post('/app/fetch-tags', [TestController::class, 'fetchTags']);
+
+Route::post('admin/add-tag', [TagController::class, 'addTag']);
+
+Route::get('admin/get-tag', [TagController::class, 'getTag']);
+Route::post('admin/edit-tag', [TagController::class, 'editTag']);
