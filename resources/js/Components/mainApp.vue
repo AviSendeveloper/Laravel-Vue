@@ -125,6 +125,15 @@
                 </a>
               </router-link>
             </li>
+            <!-- Category -->
+            <li class="menu-item">
+              <router-link :to="{ name: 'categories' }">
+                <a class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Category</div>
+                </a>
+              </router-link>
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->

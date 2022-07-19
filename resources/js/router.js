@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import fristPage from './Components/firstPage.vue';
 import hooks from './Components/basic/hooks.vue';
 
-import homePage from './Components/pages/home.vue';
-import tags from './Components/pages/tags.vue';
+import homePage from './Components/admin/home.vue';
+import tags from './Components/admin/tags.vue';
+import categories from './Components/admin/categories.vue';
 
 
 const Router = createRouter({
@@ -21,11 +21,10 @@ const Router = createRouter({
             path: '/tags',
             component: tags,
         },
-        // Test
         {
-            name: 'first',
-            path: '/first-route-page',
-            component: fristPage,
+            name: 'categories',
+            path: '/categories',
+            component: categories,
         },
 
         // Hooks route
