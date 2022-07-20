@@ -40,5 +40,6 @@ Route::prefix('admin')->group(function() {
     Route::get('/delete-category/{id}', [CategoryController::class, 'deleteCategory']);
 
     Route::post('/upload-category-image', [CategoryController::class, 'uploadImage']);
+    Route::post('/delete-category-image', [CategoryController::class, 'deleteImage']);
 });
 

@@ -58,7 +58,7 @@
         <!-- Bootstrap Table with Header - Light -->
 
         <!-- Add model -->
-        <Modal v-model="addModel" title="Add category" @on-ok="addCategory">
+        <Modal v-model="addModel" title="Add category" @on-ok="addCategory" @on-cancel="closeAddModel">
           <div class="form-group">
             <label for="exampleInputEmail1">Category Name</label>
             <input
@@ -71,6 +71,7 @@
           <div class="form-group">
             <label for="exampleInputEmail1">Upload Icon</label>
             <Upload
+                ref="upload"
                 :headers="{ 'x-csrf-token': token, 'X-Requested-With': 'XMLHttpRequest'}"
                 :on-success="handleSuccess"
                 :on-error="handelError"
@@ -84,6 +85,9 @@
                 </div>
             </Upload>
             <div style="padding: 20px 0">
+                <div v-if="addData.icon.length" @click="deleteImage()">
+                  <Icon type="ios-trash-outline" size="40"/>
+                </div>
                 <img :src="`/upload/category/${addData.icon}`" alt="">
             </div>
           </div>
@@ -91,7 +95,7 @@
         <!-- Add model -->
 
         <!-- Edit model -->
-        <Modal v-model="editModel" title="Edit Tag" @on-ok="editCategory">
+        <Modal v-model="editModel" title="Edit Tag" @on-ok="editCategory" @on-cancel="closeEditModel">
           <div class="form-group">
             <label>Category Name</label>
             <input
@@ -100,6 +104,29 @@
               placeholder="Enter email"
               v-model="editData.name"
             />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Uploaded Icon</label>
+            <Upload v-if="isNewUpload"
+                ref="edit_upload"
+                :headers="{ 'x-csrf-token': token, 'X-Requested-With': 'XMLHttpRequest'}"
+                :on-success="handleSuccess"
+                :on-error="handelError"
+                :format="['jpg','jpeg','png']"
+                :on-format-error="handleFormatError"
+                type="drag"
+                action="admin/upload-category-image">
+                <div style="padding: 20px 0">
+                    <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                    <p>Click or drag files here to upload</p>
+                </div>
+            </Upload>
+            <div style="padding: 20px 0">
+                <div v-if="editData.icon.length" @click="deleteImage()">
+                    <Icon type="ios-trash-outline" size="40"/>
+                </div>
+                <img :src="`/upload/category/${editData.icon}`" alt="">
+            </div>
           </div>
         </Modal>
         <!-- Edit model -->
@@ -154,6 +181,7 @@ export default {
       editData: {
         id: '',
         name: "",
+        icon: ''
       },
       categories: [],
       editIndex: -1,
@@ -161,11 +189,13 @@ export default {
       del_modal_loading: false,
       deleteId: 0,
       deleteIndex: -1,
-      token: ''
+      token: '',
+      isNewUpload: false
     };
   },
 
   methods: {
+    // Add
     async addCategory() {
       // Validate tag name field
       if (this.addData.name == '') {
@@ -188,11 +218,27 @@ export default {
       }
     },
 
+    async closeAddModel() {
+        this.addData.name = '';
+        if (this.addData.icon) {
+            await this.deleteImage;
+        }
+        this.addModel = false;
+    },
+
+    // Edit
     toggleEditModel(category, index) {
         this.editData.id = category.id;
         this.editData.name = category.name;
+        this.editData.icon = category.icon;
+        console.log(this.editData.icon);
         this.editIndex = index;
         this.editModel = true;
+    },
+
+    async closeEditModel() {
+        console.log('working');
+        this.editModel = false;
     },
 
     async editCategory() {
@@ -205,6 +251,7 @@ export default {
       const res = await this.callApi("post", "admin/edit-category", this.editData);
       if (res.status === 200) {
           this.categories[this.editIndex].name = this.editData.name;
+          this.categories[this.editIndex].icon = this.editData.icon;
           this.editModel = false;
           return this.success('Category edit successfully')
       } else {
@@ -216,6 +263,7 @@ export default {
       }
     },
 
+    // Delete
     toggleDeleteModel(category, index) {
         this.deleteIndex = index;
         this.deleteId = category.id;
@@ -235,7 +283,50 @@ export default {
       }
     },
 
+    // Delete Image for add and edit model
+    async deleteImage() {
+      if (this.editModel == true) { // for edit model
+          if (this.editData.icon == '') {
+              return this.warning('Image must be exist');
+          }
+
+          const res = await this.callApi('post', 'admin/delete-category-image', {id: this.editData.id, icon: this.editData.icon, editImage: this.isNewUpload});
+
+          if (res.status === 200) {
+              this.editData.icon = '';
+              this.categories[this.editIndex].icon = '';
+              if (this.isNewUpload) {
+                  this.$refs.edit_upload.clearFiles();
+              }
+              this.isNewUpload = true;
+              this.success('File deleted successfully');
+              console.log(this.editData);
+          } else {
+              this.warning('File not exist');
+          }
+          console.log('working');
+      } else { // for add model
+          if (this.addData.icon == '') {
+              return this.warning('Image must be exist');
+          }
+
+          const res = await this.callApi('post', 'admin/delete-category-image', {icon: this.addData.icon});
+
+          if (res.status === 200) {
+              this.addData.icon = '';
+              this.$refs.upload.clearFiles();
+              this.success('File deleted successfully');
+          } else {
+              this.warning('File not exist');
+          }
+      }
+    },
+
+    // upload response handeler
     handleSuccess (res, file) {
+        if (this.isNewUpload) {
+            this.editData.icon = res.file_name;
+        }
         this.addData.icon = res.file_name;
     },
 

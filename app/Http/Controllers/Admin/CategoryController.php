@@ -62,4 +62,24 @@ class CategoryController extends Controller
         $file->move(public_path('upload/category'), $file_name);
         return response()->json(['file_name'=>$file_name]);
     }
+
+    public function deleteImage(Request $request) {
+        $request->validate([
+            'icon' => 'required'
+        ]);
+
+        if ($request->has('editImage')) {
+            Category::where('id', $request->id)->update([
+                'icon' => '',
+            ]);
+        }
+
+        $file_path = public_path('upload/category/').$request->icon;
+        if (file_exists($file_path)) {
+            unlink($file_path);
+            return response()->json(['success' => 'file '.$request->icon.' delete successfully'], 200);
+        } else {
+            return response()->json(['errors' => 'file '.$request->icon.' does not exist'], 422);
+        }
+    }
 }
