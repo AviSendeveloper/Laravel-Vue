@@ -32,12 +32,12 @@ Route::prefix('admin')->group(function() {
     Route::get('/get-tag', [TagController::class, 'getTag']);
     Route::post('/add-tag', [TagController::class, 'addTag']);
     Route::post('/edit-tag', [TagController::class, 'editTag']);
-    Route::get('/delete-tag/{id}', [TagController::class, 'deleteTag']);
+    Route::post('/delete-tag', [TagController::class, 'deleteTag']);
 
     Route::get('/get-category', [CategoryController::class, 'getCategory']);
     Route::post('/add-category', [CategoryController::class, 'addCategory']);
     Route::post('/edit-category', [CategoryController::class, 'editCategory']);
-    Route::get('/delete-category/{id}', [CategoryController::class, 'deleteCategory']);
+    Route::post('/delete-category', [CategoryController::class, 'deleteCategory']);
 
     Route::post('/upload-category-image', [CategoryController::class, 'uploadImage']);
     Route::post('/delete-category-image', [CategoryController::class, 'deleteImage']);

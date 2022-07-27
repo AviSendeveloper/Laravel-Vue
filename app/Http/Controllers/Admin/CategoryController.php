@@ -35,6 +35,7 @@ class CategoryController extends Controller
         // Validation
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'icon' => 'required',
         ]);
         
         if ($validator->fails()) {
@@ -43,11 +44,20 @@ class CategoryController extends Controller
         
         return Category::where('id', $request->id)->update([
             'name' => $request->name,
+            'icon' => $request->icon,
         ]);
     }
 
-    public function deleteCategory($id) {
-        $category = Category::where('id', $id)->delete();
+    public function deleteCategory(Request $request) {
+        $category = Category::where('id', $request->id)->first();
+        $file_name = $category->icon;
+        if ($file_name) {
+            $deleteStatus = $this->deleteImageFromServer($file_name);
+            if (!$deleteStatus) {
+                return response()->json(['msg'=>'file '.$request->icon.' does not exist']);
+            }
+        }
+        $category->delete();
         return response()->json(['msg'=>'Deleted successfully']);
     }
 
@@ -74,12 +84,22 @@ class CategoryController extends Controller
             ]);
         }
 
-        $file_path = public_path('upload/category/').$request->icon;
-        if (file_exists($file_path)) {
-            unlink($file_path);
+        $deleteStatus = $this->deleteImageFromServer($request->icon);
+
+        if ($deleteStatus) {
             return response()->json(['success' => 'file '.$request->icon.' delete successfully'], 200);
         } else {
             return response()->json(['errors' => 'file '.$request->icon.' does not exist'], 422);
+        }
+    }
+
+    public function deleteImageFromServer($filename) {
+        $file_path = public_path('upload/category/').$filename;
+        if (file_exists($file_path)) {
+            unlink($file_path);
+            return true;
+        } else {
+            return false;
         }
     }
 }

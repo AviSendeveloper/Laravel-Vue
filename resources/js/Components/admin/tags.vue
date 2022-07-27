@@ -79,7 +79,7 @@
         <!-- Edit model -->
 
         <!-- Delete model -->
-        <Modal v-model="delModel" width="360">
+        <!-- <Modal v-model="delModel" width="360">
             <template #header>
                 <p style="color:#f60;text-align:center">
                     <Icon type="ios-information-circle"></Icon>
@@ -93,7 +93,8 @@
             <template #footer>
                 <Button type="error" size="large" long :loading="del_modal_loading" @click="deleteTag()">Delete</Button>
             </template>
-        </Modal>
+        </Modal> -->
+            <delete-model></delete-model>
         <!-- Delete model -->
       </div>
       <!-- / Content -->
@@ -116,6 +117,9 @@
 </style>
 
 <script>
+import DeleteModel from '../reuse_component/DeleteModel.vue';
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -189,14 +193,20 @@ export default {
     },
 
     toggleDeleteModel(tag, index) {
-        this.deleteIndex = index;
-        this.deleteId = tag.id;
-        this.delModel = true;
+        const deleteModelObj = {
+            showDeleteModel: true,
+            deleteUrl: 'admin/delete-tag',
+            deleteId: tag.id,
+            deleteIndex: index,
+            isDeleted: false
+        }
+
+        this.$store.commit('showDeleteModel', deleteModelObj);
     },
 
     async deleteTag () {
       this.del_modal_loading = true;
-      const delete_response = await this.callApi('get', `admin/delete-tag/${this.deleteId}`);
+      const delete_response = await this.callApi('post', `admin/delete-tag`, {id: this.deleteId});
 
       if (delete_response.status === 200) {
           // delete data from tag array
@@ -205,7 +215,22 @@ export default {
           this.delModel = false;
           this.success(delete_response.data.msg);
       }
-  }
+    }
+  },
+
+  computed: {
+    ...mapGetters([
+        'getDeleteModelObj'
+    ])
+  },
+
+  watch: {
+    getDeleteModelObj(obj) {
+      console.log(obj);
+      if (this.getDeleteModelObj.isDeleted) {
+        this.tags.splice(obj.deleteIndex, 1);
+      }
+    }
   },
 
   async created() {
@@ -221,5 +246,9 @@ export default {
       this.tags = res.data;
     }
   },
+
+  components: {
+    DeleteModel
+  }
 };
 </script>

@@ -7,17 +7,19 @@
         <!-- Bootstrap Table with Header - Light -->
         <div class="card">
           <div class="heading">
-              <div class="child">
-                  <h5>Category list</h5>
+            <div class="child">
+              <h5>Category list</h5>
+            </div>
+            <div class="child">
+              <div class="add-button">
+                <Button class="float-right" @click="addModel = true"
+                  >Add category</Button
+                >
               </div>
-              <div class="child">
-                  <div class="add-button">
-                      <Button class="float-right" @click="addModel = true">Add category</Button>
-                  </div>
-              </div>
+            </div>
           </div>
-          <hr>
-          <br>
+          <hr />
+          <br />
           <div class="table-responsive text-nowrap">
             <table class="table">
               <thead class="table-light">
@@ -38,17 +40,32 @@
                   <td>
                     <i class="fab fa-angular fa-lg text-danger me-3"></i>
                     <div>
-                      <img :src="`/upload/category/${category.icon}`" style="width: 100px">
+                      <img
+                        :src="`/upload/category/${category.icon}`"
+                        style="width: 100px"
+                      />
                     </div>
                   </td>
                   <td>{{ category.name }}</td>
                   <td>
                     <span class="badge bg-label-primary me-1">
-                      {{ category.created_at }}</span>
+                      {{ category.created_at }}</span
+                    >
                   </td>
                   <td>
-                    <button class="btn btn-warning" @click="toggleEditModel(category, i)">Edit</button> &nbsp;
-                    <button class="btn btn-danger" @click="toggleDeleteModel(category, i)">Delete</button>
+                    <button
+                      class="btn btn-warning"
+                      @click="toggleEditModel(category, i)"
+                    >
+                      Edit
+                    </button>
+                    &nbsp;
+                    <button
+                      class="btn btn-danger"
+                      @click="toggleDeleteModel(category, i)"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -58,7 +75,12 @@
         <!-- Bootstrap Table with Header - Light -->
 
         <!-- Add model -->
-        <Modal v-model="addModel" title="Add category" @on-ok="addCategory" @on-cancel="closeAddModel">
+        <Modal
+          v-model="addModel"
+          title="Add category"
+          @on-ok="addCategory"
+          @on-cancel="closeAddModel"
+        >
           <div class="form-group">
             <label for="exampleInputEmail1">Category Name</label>
             <input
@@ -71,31 +93,44 @@
           <div class="form-group">
             <label for="exampleInputEmail1">Upload Icon</label>
             <Upload
-                ref="upload"
-                :headers="{ 'x-csrf-token': token, 'X-Requested-With': 'XMLHttpRequest'}"
-                :on-success="handleSuccess"
-                :on-error="handelError"
-                :format="['jpg','jpeg','png']"
-                :on-format-error="handleFormatError"
-                type="drag"
-                action="admin/upload-category-image">
-                <div style="padding: 20px 0">
-                    <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                    <p>Click or drag files here to upload</p>
-                </div>
+              ref="upload"
+              :headers="{
+                'x-csrf-token': token,
+                'X-Requested-With': 'XMLHttpRequest',
+              }"
+              :on-success="handleSuccess"
+              :on-error="handelError"
+              :format="['jpg', 'jpeg', 'png']"
+              :on-format-error="handleFormatError"
+              type="drag"
+              action="admin/upload-category-image"
+            >
+              <div style="padding: 20px 0">
+                <Icon
+                  type="ios-cloud-upload"
+                  size="52"
+                  style="color: #3399ff"
+                ></Icon>
+                <p>Click or drag files here to upload</p>
+              </div>
             </Upload>
             <div style="padding: 20px 0">
-                <div v-if="addData.icon.length" @click="deleteImage()">
-                  <Icon type="ios-trash-outline" size="40"/>
-                </div>
-                <img :src="`/upload/category/${addData.icon}`" alt="">
+              <div v-if="addData.icon.length" @click="deleteImage()">
+                <Icon type="ios-trash-outline" size="40" />
+              </div>
+              <img :src="`/upload/category/${addData.icon}`" alt="" />
             </div>
           </div>
         </Modal>
         <!-- Add model -->
 
         <!-- Edit model -->
-        <Modal v-model="editModel" title="Edit Tag" @on-ok="editCategory" @on-cancel="closeEditModel">
+        <Modal
+          v-model="editModel"
+          title="Edit Tag"
+          @on-ok="editCategory"
+          @on-cancel="closeEditModel"
+        >
           <div class="form-group">
             <label>Category Name</label>
             <input
@@ -107,32 +142,41 @@
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Uploaded Icon</label>
-            <Upload v-if="isNewUpload"
-                ref="edit_upload"
-                :headers="{ 'x-csrf-token': token, 'X-Requested-With': 'XMLHttpRequest'}"
-                :on-success="handleSuccess"
-                :on-error="handelError"
-                :format="['jpg','jpeg','png']"
-                :on-format-error="handleFormatError"
-                type="drag"
-                action="admin/upload-category-image">
-                <div style="padding: 20px 0">
-                    <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                    <p>Click or drag files here to upload</p>
-                </div>
+            <Upload
+              v-if="isNewUpload"
+              ref="edit_upload"
+              :headers="{
+                'x-csrf-token': token,
+                'X-Requested-With': 'XMLHttpRequest',
+              }"
+              :on-success="handleSuccess"
+              :on-error="handelError"
+              :format="['jpg', 'jpeg', 'png']"
+              :on-format-error="handleFormatError"
+              type="drag"
+              action="admin/upload-category-image"
+            >
+              <div style="padding: 20px 0">
+                <Icon
+                  type="ios-cloud-upload"
+                  size="52"
+                  style="color: #3399ff"
+                ></Icon>
+                <p>Click or drag files here to upload</p>
+              </div>
             </Upload>
             <div style="padding: 20px 0">
-                <div v-if="editData.icon.length" @click="deleteImage()">
-                    <Icon type="ios-trash-outline" size="40"/>
-                </div>
-                <img :src="`/upload/category/${editData.icon}`" alt="">
+              <div v-if="editData.icon.length" @click="deleteImage()">
+                <Icon type="ios-trash-outline" size="40" />
+              </div>
+              <img :src="`/upload/category/${editData.icon}`" alt="" />
             </div>
           </div>
         </Modal>
         <!-- Edit model -->
 
         <!-- Delete model -->
-        <Modal v-model="delModel" width="360">
+        <!-- <Modal v-model="delModel" width="360">
             <template #header>
                 <p style="color:#f60;text-align:center">
                     <Icon type="ios-information-circle"></Icon>
@@ -146,7 +190,8 @@
             <template #footer>
                 <Button type="error" size="large" long :loading="del_modal_loading" @click="deleteCategory()">Delete</Button>
             </template>
-        </Modal>
+        </Modal> -->
+        <delete-model></delete-model>
         <!-- Delete model -->
       </div>
       <!-- / Content -->
@@ -157,18 +202,21 @@
 </template>
 
 <style scoped>
-    .child {
-        width: 50%;
-        float: left;
-        padding: 20px;
-    }
+.child {
+  width: 50%;
+  float: left;
+  padding: 20px;
+}
 
-    .add-button {
-      float: right;
-    }
+.add-button {
+  float: right;
+}
 </style>
 
 <script>
+import DeleteModel from '../reuse_component/DeleteModel.vue';
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -207,6 +255,8 @@ export default {
       if (res.status === 201) {
           this.categories.unshift(res.data);
           this.addData.name = '';
+          this.addData.icon = '';
+          this.$refs.upload.clearFiles();
           this.addModel = false;
           this.success('Category add successfully')
       } else {
@@ -265,14 +315,24 @@ export default {
 
     // Delete
     toggleDeleteModel(category, index) {
-        this.deleteIndex = index;
-        this.deleteId = category.id;
-        this.delModel = true;
+        const deleteModelObj = {
+            showDeleteModel: true,
+            deleteUrl: 'admin/delete-category',
+            deleteId: category.id,
+            deleteIndex: index,
+            isDeleted: false
+        }
+
+        this.$store.commit('showDeleteModel', deleteModelObj);
+
+        // this.deleteIndex = index;
+        // this.deleteId = category.id;
+        // this.delModel = true;
     },
 
     async deleteCategory () {
       this.del_modal_loading = true;
-      const delete_response = await this.callApi('get', `admin/delete-category/${this.deleteId}`);
+      const delete_response = await this.callApi('post', `admin/delete-category`, {id: this.deleteId});
 
       if (delete_response.status === 200) {
           // delete data from category array
@@ -345,6 +405,21 @@ export default {
     },
   },
 
+  computed: {
+    ...mapGetters([
+        'getDeleteModelObj'
+    ])
+  },
+
+  watch: {
+    getDeleteModelObj(obj) {
+      console.log(obj);
+      if (this.getDeleteModelObj.isDeleted) {
+        this.categories.splice(obj.deleteIndex, 1);
+      }
+    }
+  },
+
   async created() {
     // const res = await this.callApi("get", "admin/get-category").then((res) => {
     //   console.log(res);
@@ -353,7 +428,6 @@ export default {
     //   }
     // });
 
-    // this.token = window.laravel.csrf_token;
     this.token = document.querySelector('meta[name="_token"]').getAttribute('content');
     console.log(this.token);
     
@@ -362,5 +436,9 @@ export default {
       this.categories = res.data;
     }
   },
+
+  components: {
+    DeleteModel
+  }
 };
 </script>

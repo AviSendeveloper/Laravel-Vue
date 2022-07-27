@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import hooks from './Components/basic/hooks.vue';
+import master from './vuex_test/master.vue';
 
 import homePage from './Components/admin/home.vue';
 import tags from './Components/admin/tags.vue';
@@ -32,6 +33,11 @@ const Router = createRouter({
             name: 'hooks',
             path: '/hooks',
             component: hooks,
+        },
+        {
+            name: 'master',
+            path: '/master',
+            component: master,
         }
     ]
 });
