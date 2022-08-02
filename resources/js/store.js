@@ -9,7 +9,9 @@ const store = createStore({
             deleteId: 0,
             deleteIndex: -1,
             isDeleted: false
-        }
+        },
+        isUserLoggedin: false,
+        userDetails: null
     },
 
     getters: {
@@ -19,6 +21,10 @@ const store = createStore({
 
         getDeleteModelObj(state) {
             return state.deleteModelObj;
+        },
+
+        getUserStatus(state) {
+            return state.isUserLoggedin;
         }
     },
 
@@ -33,6 +39,11 @@ const store = createStore({
 
         deleteModel(state, data) {
             state.deleteModelObj = data
+        },
+
+        updateUserLoginStatus(state, status, data) {
+            state.isUserLoggedin = status
+            state.userDetails = data
         }
     },
 

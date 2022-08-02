@@ -6,6 +6,7 @@
         <aside
           id="layout-menu"
           class="layout-menu menu-vertical menu bg-menu-theme"
+          v-if="getUserStatus"
         >
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
@@ -134,6 +135,24 @@
                 </a>
               </router-link>
             </li>
+            <!-- Admin User -->
+            <li class="menu-item">
+              <router-link :to="{ name: 'admin_user' }">
+                <a class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Admin User</div>
+                </a>
+              </router-link>
+            </li>
+            <!-- Roles -->
+            <li class="menu-item">
+              <router-link :to="{ name: 'roles' }">
+                <a class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Roles</div>
+                </a>
+              </router-link>
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -150,6 +169,7 @@
               bg-navbar-theme
             "
             id="layout-navbar"
+            v-if="getUserStatus"
           >
             <div
               class="
@@ -290,3 +310,27 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex';
+
+export default {
+    props: ['userStatus', 'userDetails'],
+    
+    data() {
+      return {
+        isLoggedin: false
+      }
+    },
+
+    computed: {
+      ...mapGetters([
+          'getUserStatus'
+      ])
+    },
+
+    created() {
+        this.$store.commit('updateUserLoginStatus', this.userStatus, this.userDetails)
+    }
+}
+</script>

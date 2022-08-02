@@ -204,18 +204,18 @@ export default {
         this.$store.commit('showDeleteModel', deleteModelObj);
     },
 
-    async deleteTag () {
-      this.del_modal_loading = true;
-      const delete_response = await this.callApi('post', `admin/delete-tag`, {id: this.deleteId});
+    // async deleteTag () {
+    //   this.del_modal_loading = true;
+    //   const delete_response = await this.callApi('post', `admin/delete-tag`, {id: this.deleteId});
 
-      if (delete_response.status === 200) {
-          // delete data from tag array
-          this.tags.splice(this.deleteIndex, 1);
-          this.del_modal_loading = false;
-          this.delModel = false;
-          this.success(delete_response.data.msg);
-      }
-    }
+    //   if (delete_response.status === 200) {
+    //       // delete data from tag array
+    //       this.tags.splice(this.deleteIndex, 1);
+    //       this.del_modal_loading = false;
+    //       this.delModel = false;
+    //       this.success(delete_response.data.msg);
+    //   }
+    // }
   },
 
   computed: {

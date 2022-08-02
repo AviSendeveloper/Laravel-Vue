@@ -31,10 +31,18 @@ export default {
                 })
                 return response;
             } catch (error) {
-                // console.log('error block', error);
-                return error;
+                console.log('error block', error.response);
+                return error.response;
             }
-            
+            // const response = await axios({
+            //     method: method,
+            //     url: url,
+            //     data: dataObj,
+            // })
+            // .catch((error)=>{
+            //     return error.response
+            // })
+            // return response;
         },
 
         // Notification

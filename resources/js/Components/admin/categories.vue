@@ -330,18 +330,18 @@ export default {
         // this.delModel = true;
     },
 
-    async deleteCategory () {
-      this.del_modal_loading = true;
-      const delete_response = await this.callApi('post', `admin/delete-category`, {id: this.deleteId});
+    // async deleteCategory () {
+    //   this.del_modal_loading = true;
+    //   const delete_response = await this.callApi('post', `admin/delete-category`, {id: this.deleteId});
 
-      if (delete_response.status === 200) {
-          // delete data from category array
-          this.categories.splice(this.deleteIndex, 1);
-          this.del_modal_loading = false;
-          this.delModel = false;
-          this.success(delete_response.data.msg);
-      }
-    },
+    //   if (delete_response.status === 200) {
+    //       // delete data from category array
+    //       this.categories.splice(this.deleteIndex, 1);
+    //       this.del_modal_loading = false;
+    //       this.delModel = false;
+    //       this.success(delete_response.data.msg);
+    //   }
+    // },
 
     // Delete Image for add and edit model
     async deleteImage() {
@@ -421,15 +421,7 @@ export default {
   },
 
   async created() {
-    // const res = await this.callApi("get", "admin/get-category").then((res) => {
-    //   console.log(res);
-    //   if (res.status === 200) {
-    //     this.categories = res.data;
-    //   }
-    // });
-
     this.token = document.querySelector('meta[name="_token"]').getAttribute('content');
-    console.log(this.token);
     
     const res = await this.callApi("get", "admin/get-category")
     if (res.status === 200) {

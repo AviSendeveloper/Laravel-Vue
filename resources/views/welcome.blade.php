@@ -31,7 +31,11 @@
 
 <body>
     <div id="app">
-        <main-app></main-app>
+        @if (Auth::check())
+            <main-app :user-status="true" :user-details="{{Auth::user()->role}}"></main-app>
+        @else
+            <main-app :user-status="false" :user-details="null"></main-app>
+        @endif
     </div>
 </body>
 
