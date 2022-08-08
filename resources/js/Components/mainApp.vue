@@ -153,6 +153,15 @@
                 </a>
               </router-link>
             </li>
+            <!-- Role Assign -->
+            <li class="menu-item">
+              <router-link :to="{ name: 'role_assign' }">
+                <a class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Role Assign</div>
+                </a>
+              </router-link>
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->

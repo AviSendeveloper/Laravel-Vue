@@ -42,14 +42,32 @@ class RoleController extends Controller
             return response()->json(['errors'=>$validator->errors()], 422);
         }
         
-        return Role::where('id', $request->id)->update([
+        Role::where('id', $request->id)->update([
             'name' => $request->name,
             'isAdmin' => $request->isAdmin,
         ]);
+
+        $role_details = Role::where('id', $request->id)->first();
+
+        return response()->json($role_details, 200);
     }
 
     public function deleteRole(Request $request) {
         $Role = Role::where('id', $request->id)->delete();
         return response()->json(['msg'=>'Deleted successfully']);
+    }
+
+    public function assignRole(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'permission' => 'required'
+        ]);
+
+        return Role::where('id', $request->id)->update([
+            'permission' => $request->permission
+        ]);
+
+        // return response()->json()
     }
 }

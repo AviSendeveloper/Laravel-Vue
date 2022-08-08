@@ -178,7 +178,9 @@ export default {
     toggleEditModel(role, index) {
         this.editData.id = role.id;
         this.editData.name = role.name;
+        this.editData.isAdmin = role.isAdmin;
         this.editIndex = index;
+        // console.log('role object', this.roles[this.editIndex]);
         this.editModel = true;
     },
 
@@ -190,7 +192,9 @@ export default {
       // Upload edited role name
       const res = await this.callApi("post", "admin/edit-role", this.editData);
       if (res.status === 200) {
-          this.roles[this.editIndex].name = this.editData.name;
+          console.log(res);
+          this.roles[this.editIndex].name = res.data.name;
+          this.roles[this.editIndex].isAdmin = res.data.isAdmin;
           this.editModel = false;
           return this.success('Role edit successfully')
       } else {

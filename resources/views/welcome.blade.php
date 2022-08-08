@@ -27,6 +27,11 @@
         rel="stylesheet" />
 
     <link rel="stylesheet" href="css/app.css">
+    <style scoped>
+        .router-link-active {
+        background-color: aqua;
+        }
+        </style>
 </head>
 
 <body>

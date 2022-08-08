@@ -11,6 +11,7 @@ import categories from './Components/admin/categories.vue';
 import AdminUser from './Components/admin/admin_user.vue';
 import AdminLogin from './Components/admin/admin_login.vue';
 import roles from './Components/admin/roles.vue';
+import roleAssign from './Components/admin/roleAssign.vue';
 
 
 const Router = createRouter({
@@ -46,6 +47,11 @@ const Router = createRouter({
             name: 'roles',
             path: '/roles',
             component: roles,
+        },
+        {
+            name: 'role_assign',
+            path: '/role-assign',
+            component: roleAssign,
         },
 
         // Hooks route

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,17 +51,15 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     Route::post('/add-role', [RoleController::class, 'addRole']);
     Route::post('/edit-role', [RoleController::class, 'editRole']);
     Route::post('/delete-role', [RoleController::class, 'deleteRole']);
-
-    
-    // Route::any('admin/{slug}', function() {
-        //     return view('welcome');
-        // });
+    Route::post('/role-assign', [RoleController::class, 'assignRole']);
 });
     
 Route::post('admin/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::any('{slug}', function() {
-    return view('welcome');
-});
+Route::any('{slug}', [IndexController::class, 'index']);
+
+// Route::any('{slug}', function() {
+//     return view('welcome');
+// });
 
